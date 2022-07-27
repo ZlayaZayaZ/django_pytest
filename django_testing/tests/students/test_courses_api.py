@@ -15,11 +15,6 @@ def client():
 
 
 @pytest.fixture
-def student():
-    return Student.objects.create(name='Vasilkova Lubov')
-
-
-@pytest.fixture
 def student_factory():
     def factory(*args, **kwargs):
         return baker.make(Student, *args, **kwargs)
