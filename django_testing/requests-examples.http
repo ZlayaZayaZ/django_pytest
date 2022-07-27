@@ -1,0 +1,26 @@
+# примеры API-запросов
+
+@baseUrl = http://localhost:8000/api/v1/
+
+# получение всех курсов
+GET {{baseUrl}}/courses/
+Content-Type: application/json
+
+###
+
+# создание нового курса
+POST {{baseUrl}}/courses/
+Content-Type: application/json
+
+{
+  "name": "C++",
+  "students": "1"
+}
+
+###
+
+# удаление курса
+DELETE {{baseUrl}}/courses/8/
+Content-Type: application/json
+
+###
