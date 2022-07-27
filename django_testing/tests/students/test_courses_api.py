@@ -33,11 +33,15 @@ def course_factory():
 # проверка получения одного курса (retrieve-логика)
 @pytest.mark.django_db
 def test_course_retrieve(client, course_factory):
+
     courses = course_factory(_quantity=5)
+
     ids = [course.id for course in courses]
     id = random.choice(ids)
+
     url = reverse('courses-detail', kwargs={'pk': id})
     response = client.get(url)
+
     db_course = Course.objects.get(pk=id)
 
     assert response.status_code == status.HTTP_200_OK
@@ -83,6 +87,7 @@ def test_filtering_course_by_id(client, course_factory):
 # проверка фильтрации списка курсов по name
 @pytest.mark.django_db
 def test_filtering_course_by_name(client, course_factory):
+
     courses = course_factory(_quantity=5)
 
     names = [course.name for course in courses]
@@ -104,6 +109,7 @@ def test_create_courses(client):
 
     count = Course.objects.count()
     url = reverse('courses-list')
+
     data = {'name': 'django', }
 
     response = client.post(url, data, format='json')
@@ -118,12 +124,12 @@ def test_create_courses(client):
 def test_update_courses(client, course_factory):
 
     courses = course_factory(_quantity=5)
+
     ids = [course.id for course in courses]
     id = random.choice(ids)
+
     url = reverse('courses-detail', kwargs={'pk': id})
-
     data = {'name': 'django', }
-
     response = client.put(url, data, format='json')
 
     db_course = Course.objects.get(pk=id)
@@ -138,10 +144,11 @@ def test_delete_courses(client, course_factory):
 
     courses = course_factory(_quantity=5)
     count = Course.objects.count()
+
     ids = [course.id for course in courses]
     id = random.choice(ids)
-    url = reverse('courses-detail', kwargs={'pk': id})
 
+    url = reverse('courses-detail', kwargs={'pk': id})
     response = client.delete(url)
 
     assert response.status_code == status.HTTP_204_NO_CONTENT
